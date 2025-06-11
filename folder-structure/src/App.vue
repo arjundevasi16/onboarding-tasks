@@ -34,56 +34,10 @@ interface FileNode {
   children?: FileNode[]
 }
 
-// Reactive folder tree
-const folders = reactive<FileNode[]>([
-  {
-    id: 1,
-    name: 'src',
-    type: 'folder',
-    children: [
-      {
-        id: 2,
-        name: 'components',
-        type: 'folder',
-        children: [
-          {
-            id: 3,
-            name: 'common',
-            type: 'folder',
-            children: [
-              { id: 4, name: 'Button.vue', type: 'file' },
-              { id: 5, name: 'Card.vue', type: 'file' },
-            ],
-          },
-          { id: 6, name: 'Header.vue', type: 'file' },
-          { id: 7, name: 'Footer.vue', type: 'file' },
-        ],
-      },
-      {
-        id: 8,
-        name: 'views',
-        type: 'folder',
-        children: [
-          { id: 9, name: 'Home.vue', type: 'file' },
-          {
-            id: 10,
-            name: 'Profile',
-            type: 'folder',
-            children: [
-              { id: 11, name: 'Edit.vue', type: 'file' },
-              { id: 12, name: 'Settings.vue', type: 'file' },
-            ],
-          },
-        ],
-      },
-      { id: 13, name: 'main.ts', type: 'file' },
-    ],
-  },
-])
+const folders = reactive<FileNode[]>([])
 
 const isAdd = ref(false)
 
-// Add child node under parent ID
 function addChildren(parentId: number, child: FileNode) {
   const addRecursively = (nodes: FileNode[]): boolean => {
     for (const node of nodes) {
@@ -102,25 +56,23 @@ function addChildren(parentId: number, child: FileNode) {
   addRecursively(folders)
 }
 
-// Remove node by ID
 function removeNode(idToRemove: number) {
-  const removeNodeRecursively = (nodes: FileNode[]): boolean => {
+  const removeRecursively = (nodes: FileNode[]): boolean => {
     for (let i = 0; i < nodes.length; i++) {
       if (nodes[i].id === idToRemove) {
         nodes.splice(i, 1)
         return true
       }
-      if (nodes[i].children && removeNodeRecursively(nodes[i].children)) {
+      if (nodes[i].children && removeRecursively(nodes[i].children as FileNode[])) {
         return true
       }
     }
     return false
   }
 
-  removeNodeRecursively(folders)
+  removeRecursively(folders)
 }
 
-// Add a new root folder
 function AddRootFolder(node: FileNode) {
   folders.push({ ...node, type: 'folder', children: [] })
   isAdd.value = false

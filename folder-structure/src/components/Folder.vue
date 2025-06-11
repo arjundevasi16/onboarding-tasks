@@ -37,26 +37,42 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import InputForm from '@/components/InputForm.vue'
 import DeleteIcon from '@/icon/DeleteIcon.vue'
-const emits = defineEmits(['addFolder', 'removeNode'])
-const props = defineProps({
-  folder: {
-    type: Object,
-    required: true,
-  },
-  folderIndex: Number,
-})
-let isAddFileOrFolder = ref(true)
+
+// Emits
+const emits = defineEmits<{
+  (e: 'addFolder', parentId: number, newNode: FileNode): void
+  (e: 'removeNode', id: number): void
+}>()
+
+// Props definition
+interface FileNode {
+  id: number
+  name: string
+  type: 'file' | 'folder'
+  children?: FileNode[]
+}
+
+const props = defineProps<{
+  folder: FileNode
+  folderIndex?: number
+}>()
+
+// State
 const isHovered = ref(false)
-function removeChild(id) {
+const isAddFileOrFolder = ref(true)
+
+// Methods
+function removeChild(id: number) {
   emits('removeNode', id)
 }
-function handelSubmit(newNode) {
+
+function handelSubmit(newNode: FileNode) {
   emits('addFolder', props.folder.id, newNode)
-  isAddFileOrFolder.value = !isAddFileOrFolder.value
+  isAddFileOrFolder.value = true
 }
 </script>
 

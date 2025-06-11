@@ -24,21 +24,30 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
 
-const props = defineProps({
-  addRootNode: Boolean,
-})
-const emit = defineEmits(['submit', 'cancel'])
+// Define emitted events
+const emit = defineEmits<{
+  (e: 'submit', payload: { id: number; name: string; type: 'file' | 'folder' }): void
+  (e: 'cancel'): void
+}>()
 
-const selectedType = ref('')
+// Define props
+const props = defineProps<{
+  addRootNode: boolean
+}>()
+
+// Refs
+const selectedType = ref<'file' | 'folder' | ''>('')
 const name = ref('')
-const inputRef = ref(null)
+const inputRef = ref<HTMLInputElement | null>(null)
 const showError = ref(false)
 
+// Auto-select folder if it's a root node
 if (props.addRootNode) selectedType.value = 'folder'
 
+// Autofocus when type is selected
 watch(
   selectedType,
   async () => {
@@ -48,10 +57,12 @@ watch(
   { immediate: true },
 )
 
-function selectType(type) {
+// Handle selection of type
+function selectType(type: 'file' | 'folder') {
   selectedType.value = type
 }
 
+// Handle form submission
 function submit() {
   if (!name.value.trim()) {
     showError.value = true
@@ -66,15 +77,10 @@ function submit() {
 
   emit('submit', payload)
 
-  if (props.addRootNode) {
-    name.value = ''
-    selectedType.value = 'folder'
-  } else {
-    name.value = ''
-    selectedType.value = ''
-  }
-
+  // Reset form state
+  name.value = ''
   showError.value = false
+  selectedType.value = props.addRootNode ? 'folder' : ''
 }
 </script>
 
