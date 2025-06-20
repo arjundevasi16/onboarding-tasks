@@ -44,11 +44,14 @@
     <component :is="steps[step]" :ref="(ele) => (stepsRef[step] = ele)" />
 
     <!-- Navigation Buttons -->
-    <div class="d-flex justify-end navBtn">
-      <v-btn class="me-2" @click="step--" :disabled="step === 0">Back</v-btn>
-      <v-btn color="primary" @click="nextStep">
-        {{ step === steps.length - 1 ? 'Submit' : 'Next' }}
-      </v-btn>
+    <div class="navBtn">
+      <v-btn class="me-2" @click="backToList">Back To List</v-btn>
+      <div>
+        <v-btn class="me-2" @click="step--" :disabled="step === 0">Back</v-btn>
+        <v-btn color="primary" @click="nextStep">
+          {{ step === steps.length - 1 ? 'Submit' : 'Next' }}
+        </v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -115,6 +118,9 @@ function submitForm() {
   resetForm()
   router.push({ name: 'Home' })
 }
+function backToList() {
+  router.push({ name: 'Home' })
+}
 async function nextStep() {
   const currentRefComponent = stepsRef.value[step.value]
   const isValid = await currentRefComponent?.validator?.()
@@ -139,10 +145,12 @@ async function nextStep() {
   position: fixed;
   z-index: 1000;
   bottom: 0;
-  padding: 8px 20px 8px 0;
+  padding: 8px 20px 8px 20px;
   border-top: 1px solid #ccc;
   background: white;
   box-shadow: 0 -2px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
 }
 .stepper-bar {
   padding-top: 8px;
