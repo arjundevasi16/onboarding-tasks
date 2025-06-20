@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="pa-4">
-    <v-card-title class="text-h6 mb-4 text-center">Professional Details</v-card-title>
+    <v-card-title class="text-center text-h5 mb-4">Professional Details</v-card-title>
     <v-form ref="formRef">
       <v-row dense>
         <!-- Designation -->
@@ -10,6 +10,8 @@
             v-model="form.professional.designation"
             :rules="[required]"
             clearable
+            density="compact"
+            variant="outlined"
           />
         </v-col>
 
@@ -20,6 +22,8 @@
             v-model="form.professional.department"
             :rules="[required]"
             clearable
+            density="compact"
+            variant="outlined"
           />
         </v-col>
 
@@ -35,6 +39,8 @@
             type="number"
             :rules="[required, isNumber]"
             clearable
+            density="compact"
+            variant="outlined"
           />
         </v-col>
 
@@ -45,6 +51,8 @@
             type="number"
             :rules="[required, isNumber]"
             clearable
+            density="compact"
+            variant="outlined"
           />
         </v-col>
 
@@ -54,6 +62,8 @@
             v-model="form.professional.currentLocation"
             :rules="[required]"
             clearable
+            density="compact"
+            variant="outlined"
           />
         </v-col>
 
@@ -67,10 +77,13 @@
             chips
             clearable
             :rules="[required]"
+            density="compact"
+            variant="outlined"
           />
         </v-col>
 
         <!-- Resume Upload -->
+        {{ form.professional.resume }}
         <v-col cols="12" md="6">
           <v-file-input
             v-model="form.professional.resume"
@@ -80,6 +93,8 @@
             prepend-icon=""
             :rules="[required]"
             clearable
+            density="compact"
+            variant="outlined"
           />
         </v-col>
       </v-row>
@@ -89,11 +104,10 @@
 
 <script setup lang="ts">
 import { useUserForm } from '@/composable/useUserForm'
-import type { UserDetails } from '@/types/user-details'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 const { formData } = useUserForm()
-const form = reactive<UserDetails>(formData)
+const form = formData
 const formRef = ref()
 const availableSkills = [
   'JavaScript',
@@ -111,6 +125,7 @@ const availableSkills = [
 // Rules
 const required = (v: string | number | null) => !!v || 'This field is required'
 const isNumber = (v: any) => !isNaN(v) || 'Must be a number'
+
 const validator = async () => {
   const result = await formRef?.value?.validate()
   return result.valid

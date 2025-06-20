@@ -1,5 +1,5 @@
-import { reactive, ref } from 'vue'
-import type { UserDetails, EducationDetails } from '@/types/user-details'
+import { reactive } from 'vue'
+import type { UserDetails } from '@/types/user-details'
 
 const defaultFormData: UserDetails = {
   personal: {

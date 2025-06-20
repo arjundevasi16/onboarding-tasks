@@ -24,20 +24,25 @@ export function useUserList() {
   function resetUserList() {
     userList.splice(0)
   }
+
   function updateUserDetails(index: number, details: UserDetails) {
-    userList[index] = structuredClone(details)
+    userList[index] = { ...details }
   }
+
   function deleteUser(index: number) {
     userList.splice(index, 1)
   }
+
   function getUserDetails(index: number) {
     return userList[index]
   }
+
   return {
     userList,
     addUser,
     resetUserList,
     updateUserDetails,
     deleteUser,
+    getUserDetails,
   }
 }
