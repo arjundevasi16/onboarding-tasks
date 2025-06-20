@@ -72,7 +72,6 @@
         </v-col>
 
         <v-col cols="12" md="4">
-          {{ form.personal.avatar }}
           <v-file-input
             v-model="form.personal.avatar"
             accept="image/png, image/jpeg, image/bmp"

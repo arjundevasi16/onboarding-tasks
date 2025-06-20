@@ -83,7 +83,7 @@
         </v-col>
 
         <!-- Resume Upload -->
-        {{ form.professional.resume }}
+
         <v-col cols="12" md="6">
           <v-file-input
             v-model="form.professional.resume"
