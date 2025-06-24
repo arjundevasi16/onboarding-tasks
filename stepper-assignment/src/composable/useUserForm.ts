@@ -45,7 +45,7 @@ const defaultFormData: UserDetails = {
 const formData = reactive<UserDetails>(structuredClone(defaultFormData))
 
 function resetForm() {
-  Object.assign(formData, structuredClone(defaultFormData))
+  Object.assign(formData, structuredClone(defaultFormData))//
 }
 
 export function useUserForm() {
