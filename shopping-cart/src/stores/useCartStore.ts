@@ -49,7 +49,7 @@ export const useCartStore = defineStore('cart', () => {
     try {
       await api.post(
         '/addToCart',
-        { productId },
+        { productId, action: 'increment' },
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem('token')}`,
