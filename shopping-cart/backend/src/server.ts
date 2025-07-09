@@ -13,9 +13,9 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use(
   cors({
-    origin: 'http://localhost:5173', // Your frontend origin
-    credentials: true, // Allow sending of cookies and authorization headers
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed methods
+    origin: 'https://shopping-cart-omega-silk.vercel.app',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Specify allowed headers
   }),
 )
